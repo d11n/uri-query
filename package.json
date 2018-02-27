@@ -1,0 +1,51 @@
+{
+    "name": "uri-query",
+    "version": "0.0.1",
+    "description": "Strictly parse and manipulate URI queries",
+    "author": "Derek Dunagan (https://github.com/rhombal)",
+    "license": "MIT",
+    "keywords": [
+        "uri",
+        "url",
+        "query",
+        "uri query",
+        "url query",
+        "parse",
+        "stringify",
+        "encode",
+        "decode"
+    ],
+    "main": "target/npm/index.js",
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/rhombal/uri-query.git"
+    },
+    "homepage": "https://github.com/rhombal/uri-query#readme",
+    "bugs": {
+        "url": "https://github.com/rhombal/uri-query/issues"
+    },
+    "dependencies": {
+        "decode-uri-component": "^0.2.0",
+        "strict-uri-encode": "^2.0.0"
+    },
+    "devDependencies": {
+        "babel-cli": "^6.26.0",
+        "babel-preset-env": "^1.6.1",
+        "chokidar-cli": "^1.2.0",
+        "eslint": "^4.18.0",
+        "mocha": "^5.0.1",
+        "np": "^2.20.1",
+        "rimraf": "^2.6.2"
+    },
+    "scripts": {
+        "test": "eslint ./source && mocha ./source/*.test.js ./source/**/*.test.js",
+        "prestart": "npm install --silent",
+        "start": "chokidar './source/**/*.js' --command 'npm test --silent'",
+        "build": "npm run --silent build-npm",
+        "prebuild-npm": "npm install --silent && npm test --silent",
+        "build-npm": "rimraf ./target/npm; babel ./source --out-dir ./target/npm",
+        "publish-npm": "git push origin && np",
+        "rinse": "rimraf ./target ./.tmp ./tmp ./**/.tmp ./**/tmp ./npm-debug.log* ./**/npm-debug.log*",
+        "scrub": "npm run --silent rinse; rimraf ./node_modules"
+    }
+}
