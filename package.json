@@ -44,7 +44,7 @@
         "build": "npm run --silent build-npm",
         "prebuild-npm": "npm install --silent && npm test --silent",
         "build-npm": "rimraf ./target/npm; babel ./source --out-dir ./target/npm",
-        "publish-npm": "git push origin && np",
+        "publish-npm": "npm run --silent build && git push origin && np",
         "rinse": "rimraf ./target ./.tmp ./tmp ./**/.tmp ./**/tmp ./npm-debug.log* ./**/npm-debug.log*",
         "scrub": "npm run --silent rinse; rimraf ./node_modules"
     }
