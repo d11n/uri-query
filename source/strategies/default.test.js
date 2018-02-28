@@ -201,6 +201,13 @@
             assert.strictEqual(uri_query.filters.price.range[1], '200');
             assert.strictEqual(`${ uri_query }`, '?filters[price][currency]=USD&filters[price][range][0]=100&filters[price][range][1]=200&filters[status]=in-stock&q=jordans');
         }
+        const uri_query = new Uri_query('?[0]=no+root+arrays&l][=&m][0]=n&filter.status=published');
+        assert.strictEqual(uri_query['[0]'], 'no root arrays');
+        assert.strictEqual(uri_query['l]['], null);
+        assert.strictEqual(Array.isArray(uri_query['m]']), true, '"m]" an array?');
+        assert.strictEqual(uri_query['m]'][0], 'n');
+        assert.strictEqual(uri_query['filter.status'], 'published');
+        assert.strictEqual(`${ uri_query }`, '?%5B0%5D=no%20root%20arrays&filter.status=published&l%5D%5B=&m%5D[0]=n');
     }
 
     function test_for_inherited_values() {

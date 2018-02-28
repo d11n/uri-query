@@ -38,7 +38,8 @@
         // -----------
 
         function is_composite_key(key) {
-            return key.includes('[') && key.includes(']') || key.includes('.');
+            const open_brack_i = key.indexOf('[', 1);
+            return open_brack_i > 0 && key.includes(']', open_brack_i);
         }
         function add_composite_value(key, value) {
             const path_keys = get_path_keys(key);
@@ -116,11 +117,10 @@
                         ); // eslint-disable-line indent
                     unparsed_path = unparsed_path.substring(close_brack_i + 1);
                 } else {
-                    let path_key = -1 === open_brack_i
+                    const path_key = -1 === open_brack_i
                         ? unparsed_path
                         : unparsed_path.substring(0, open_brack_i)
                         ; // eslint-disable-line indent
-                    '.' === path_key[0] && (path_key = path_key.substring(1));
                     path_keys.push(path_key);
                     unparsed_path = -1 === open_brack_i
                         ? ''
