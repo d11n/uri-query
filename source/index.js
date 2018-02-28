@@ -67,7 +67,7 @@
     }
 
     function parse_query_params(raw_object, strategy) {
-        const flat_object = {};
+        const flattened_proto_object = {};
         // eslint-disable-next-line guard-for-in
         for (const key in raw_object) {
             const value = raw_object[key];
@@ -79,10 +79,10 @@
                 case 'boolean' === typeof value:
                 case 'symbol' === typeof value:
                 case 'object' === typeof value:
-                    flat_object[key] = value;
+                    flattened_proto_object[key] = value;
             }
         }
-        return strategy.parse_query_params(flat_object);
+        return strategy.parse_query_params(flattened_proto_object);
     }
 }(
     require('./strategies/default'),

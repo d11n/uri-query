@@ -18,6 +18,7 @@
             new Uri_query(''),
             new Uri_query('?'),
             new Uri_query('#'),
+            new Uri_query('?#'),
             new Uri_query('#fragment'),
             new Uri_query({}),
             ]; // eslint-disable-line indent

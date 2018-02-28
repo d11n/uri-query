@@ -40,7 +40,7 @@
     "scripts": {
         "test": "eslint ./source && mocha ./source/*.test.js ./source/**/*.test.js",
         "prestart": "npm install --silent",
-        "start": "chokidar './source/**/*.js' --command 'npm test --silent'",
+        "start": "mocha --inspect-brk --watch ./source/*.test.js ./source/**/*.test.js & chokidar './source/**/*.js' --initial --silent --command 'eslint ./source'",
         "build": "npm run --silent build-npm",
         "prebuild-npm": "npm install --silent && npm test --silent",
         "build-npm": "rimraf ./target/npm; babel ./source --out-dir ./target/npm",
