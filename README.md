@@ -1,7 +1,7 @@
 # URI Query
 #### Parse and manipulate URI queries according to different strategies
 
-The URI specification RFC3986 defines very few rules on how URI queries are to be parsed. It merely states that URI queries are "non-hierarchical data" (in contrast to paths) and that `"key=value"` pairs are "often used". This module supports using or defining URI query parsing strategies that support your framework of choice, personal preferences, legacy requirements, etc.
+The URI specification RFC3986 defines very few rules on how URI queries are to be parsed. It merely states that URI queries are "non-hierarchical data" (in contrast to URI paths) and that `"key=value"` pairs are "often used". This module supports using pre-defined or defining your own URI query parsing strategies that support your framework of choice, personal preferences, legacy requirements, etc.
 
 The default strategy notably supports:
 <table><tbody>
