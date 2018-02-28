@@ -15,6 +15,7 @@
         it('decodes keys and values', test_for_decoding);
         it('parses/composes flat arrays', test_for_flat_array);
         it('parses/composes multidimensional arrays', test_for_nonflat_array);
+        it('parses/composes sets', test_for_set);
         it('parses/composes flat objects', test_for_flat_object);
         it('parses/composes non-flat objects', test_for_mixed_object);
         it('composes inherited values', test_for_inherited_values);
@@ -121,12 +122,6 @@
         assert.strictEqual(uri_query.fish[2], 'red');
         assert.strictEqual(uri_query.fish[3], 'blue');
         assert.strictEqual(`${ uri_query }`, '?fish[0]=1&fish[1]=2&fish[2]=red&fish[3]=blue');
-
-        uri_query = new Uri_query('?fish[]=red&fish[]=blue');
-        assert(Array.isArray(uri_query.fish), 'fish an array? (3)');
-        assert.strictEqual(uri_query.fish[0], 'red');
-        assert.strictEqual(uri_query.fish[1], 'blue');
-        assert.strictEqual(`${ uri_query }`, '?fish[0]=red&fish[1]=blue');
     }
 
     function test_for_nonflat_array() {
@@ -154,6 +149,22 @@
             assert.strictEqual(uri_query.tictactoe[2][2], 'X');
             assert.strictEqual(`${ uri_query }`, '?tictactoe[0][0]=X&tictactoe[0][1]=O&tictactoe[0][2]=X&tictactoe[1][0]=O&tictactoe[1][1]=X&tictactoe[1][2]=O&tictactoe[2][0]=X&tictactoe[2][1]=O&tictactoe[2][2]=X');
         }
+    }
+
+    function test_for_set() {
+        let uri_query = new Uri_query({ fish: new Set([ '1', 2, 'red', '%230000FF' ]) });
+        assert(uri_query.fish instanceof Set, 'fish a set? (1)');
+        assert.strictEqual(uri_query.fish.has('1'), true, 'has "1"?');
+        assert.strictEqual(uri_query.fish.has(2), true, 'has 2?');
+        assert.strictEqual(uri_query.fish.has('red'), true, 'has "red"?');
+        assert.strictEqual(uri_query.fish.has('#0000FF'), true, 'has "#0000FF"?');
+        assert.strictEqual(`${ uri_query }`, '?fish[]=1&fish[]=2&fish[]=red&fish[]=%230000FF');
+
+        uri_query = new Uri_query('?fish[]=two&fish[]=one');
+        assert(uri_query.fish instanceof Set, 'fish a set? (2)');
+        assert.strictEqual(uri_query.fish.has('one'), true, 'has "one"?');
+        assert.strictEqual(uri_query.fish.has('two'), true, 'has "two"?');
+        assert.strictEqual(`${ uri_query }`, '?fish[]=two&fish[]=one');
     }
 
     function test_for_flat_object() {

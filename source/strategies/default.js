@@ -46,13 +46,20 @@
             for (let i = 0, n = path_keys.length - 1; i <= n; i++) {
                 const path_key = path_keys[i];
                 if (i === n) {
-                    const real_path_key = Array.isArray(query_object_value)
-                        ? null === path_key
-                            ? query_object_value.length
-                            : path_key
-                        : String(path_key)
-                        ; // eslint-disable-line indent
-                    query_object_value[real_path_key] = value;
+                    if (null === path_key
+                        && query_object_value instanceof Set
+                        ) { // eslint-disable-line indent
+                        query_object_value.add(value);
+                    } else {
+                        /* eslint-disable indent */
+                        const real_path_key
+                            = Array.isArray(query_object_value) ? path_key
+                            : null === path_key ? ''
+                            : String(path_key)
+                            ;
+                        /* eslint-enable indent */
+                        query_object_value[real_path_key] = value;
+                    }
                 } else {
                     ensure_query_object_value(path_key, path_keys[i + 1]);
                 }
@@ -65,18 +72,23 @@
                 if (!query_object_value[path_key]) {
                     /* eslint-disable indent */
                     query_object_value[path_key]
-                        = 'number' === typeof next_path_key
-                            || null === next_path_key
-                                ? []
-                                : {}
+                        = 'number' === typeof next_path_key ? []
+                        : null === next_path_key ? new Set
+                        : {}
                         ;
                     /* eslint-enable indent */
-                } else if (Array.isArray(query_object_value[path_key])
-                    && 'string' === typeof next_path_key
+                } else if ('string' === typeof next_path_key
+                    && Array.isArray(query_object_value[path_key])
                     ) { // eslint-disable-line indent
-                    query_object_value[path_key]
-                        = convert_to_object(query_object_value[path_key])
-                        ; // eslint-disable-line indent
+                    query_object_value[path_key] = convert_to_object(
+                        query_object_value[path_key],
+                        ); // eslint-disable-line indent
+                } else if ('string' === typeof next_path_key
+                    && query_object_value[path_key] instanceof Set
+                    ) { // eslint-disable-line indent
+                    query_object_value[path_key] = convert_to_object(
+                        Array.from(query_object_value[path_key]),
+                        ); // eslint-disable-line indent
                 }
                 query_object_value = query_object_value[path_key];
                 return true;
@@ -130,6 +142,9 @@
     }
 
     function parse_query_params(query_params) {
+        if (query_params instanceof Set) {
+            return new Set(parse_query_params(Array.from(query_params)));
+        }
         const query_object = Array.isArray(query_params) ? [] : {};
         const keys = Object.keys(query_params).sort();
         for (const raw_key of keys) {
@@ -204,28 +219,38 @@
         }
         function _compose_subquery(key_prefix, iterable_value) {
             const subquery = [];
+            if (iterable_value instanceof Set) {
+                for (const item of iterable_value) {
+                    const key = `${ key_prefix }[]`;
+                    const value = item;
+                    const pair = get_to_subquery_pair(subquery, key, value);
+                    pair && subquery.push(pair);
+                }
+                return subquery.join('&');
+            }
+            // Force predictable order of keys for testability
             const subquery_keys = Object.keys(iterable_value).sort();
             for (const raw_key of subquery_keys) {
                 const key = `${ key_prefix }[${ encode(raw_key) }]`;
                 const value = iterable_value[raw_key];
-                switch (true) {
-                    case undefined === value:
-                    case null === value:
-                    case 'string' === typeof value:
-                    case 'number' === typeof value:
-                    case 'boolean' === typeof value:
-                    case 'symbol' === typeof value:
-                        subquery.push([
-                            key,
-                            get_primitive_pair_suffix(value),
-                            ].join('')); // eslint-disable-line indent
-                        break;
-                    case 'object' === typeof value:
-                        subquery.push(_compose_subquery(key, value));
-                        break;
-                }
+                const pair = get_to_subquery_pair(subquery, key, value);
+                pair && subquery.push(pair);
             }
             return subquery.join('&');
+        }
+        function get_to_subquery_pair(subquery, key, value) {
+            switch (true) {
+                case undefined === value:
+                case null === value:
+                case 'string' === typeof value:
+                case 'number' === typeof value:
+                case 'boolean' === typeof value:
+                case 'symbol' === typeof value:
+                    return `${ key }${ get_primitive_pair_suffix(value) }`;
+                case 'object' === typeof value:
+                    return _compose_subquery(key, value);
+            }
+            return null;
         }
     }
 }(
