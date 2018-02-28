@@ -13,46 +13,141 @@
         const query_pairs = query_string.split(/&+/);
         for (const pair of query_pairs) {
             let separator_index = pair.indexOf('=');
-            if (-1 === separator_index) {
-                query_object[ decode(pair) ] = true;
+            if (0 === separator_index) {
+                separator_index = pair.indexOf('=', 1);
+            }
+            /* eslint-disable indent */
+            const key = decode(pair.substring(
+                0,
+                -1 === separator_index ? undefined : separator_index,
+                ));
+            const value
+                = -1 === separator_index ? true
+                : pair.length === separator_index + 1 ? null
+                : decode(pair.substring(separator_index + 1))
+                ;
+            /* eslint-enable indent */
+            if (is_composite_key(key)) {
+                add_composite_value(key, value);
             } else {
-                if (0 === separator_index) {
-                    separator_index = pair.substring(1).indexOf('=') + 1;
-                }
-                if (0 === separator_index) {
-                    query_object[ decode(pair) ] = true;
-                } else {
-                    const key = pair.substring(0, separator_index);
-                    const value = pair.substring(separator_index + 1);
-                    query_object[ decode(key) ] = '' === value
-                        ? null
-                        : decode(value)
-                        ; // eslint-disable-line indent
-                }
+                query_object[ decode(key) ] = value;
             }
         }
         return query_object;
+
+        // -----------
+
+        function is_composite_key(key) {
+            return key.includes('[') && key.includes(']') || key.includes('.');
+        }
+        function add_composite_value(key, value) {
+            const path_keys = get_path_keys(key);
+            let query_object_value = query_object;
+            for (let i = 0, n = path_keys.length - 1; i <= n; i++) {
+                const path_key = path_keys[i];
+                if (i === n) {
+                    const real_path_key = Array.isArray(query_object_value)
+                        ? null === path_key
+                            ? query_object_value.length
+                            : path_key
+                        : String(path_key)
+                        ; // eslint-disable-line indent
+                    query_object_value[real_path_key] = value;
+                } else {
+                    ensure_query_object_value(path_key, path_keys[i + 1]);
+                }
+            }
+            return true;
+
+            // -----------
+
+            function ensure_query_object_value(path_key, next_path_key) {
+                if (!query_object_value[path_key]) {
+                    /* eslint-disable indent */
+                    query_object_value[path_key]
+                        = 'number' === typeof next_path_key
+                            || null === next_path_key
+                                ? []
+                                : {}
+                        ;
+                    /* eslint-enable indent */
+                } else if (Array.isArray(query_object_value[path_key])
+                    && 'string' === typeof next_path_key
+                    ) { // eslint-disable-line indent
+                    query_object_value[path_key]
+                        = convert_to_object(query_object_value[path_key])
+                        ; // eslint-disable-line indent
+                }
+                query_object_value = query_object_value[path_key];
+                return true;
+            }
+            function convert_to_object(arr) {
+                const obj = {};
+                const indices = Object.keys(arr);
+                for (const index of indices) {
+                    obj[String(index)] = arr[index];
+                }
+                return obj;
+            }
+        }
+        function get_path_keys(path_string) {
+            const path_keys = [];
+            let unparsed_path = path_string;
+            while (unparsed_path) {
+                const open_brack_i = unparsed_path.indexOf('[');
+                if (0 === open_brack_i) {
+                    const close_brack_i
+                        = unparsed_path.indexOf(']', open_brack_i)
+                        ; // eslint-disable-line indent
+                    path_keys.push(
+                        unparsed_path.substring(1, close_brack_i),
+                        ); // eslint-disable-line indent
+                    unparsed_path = unparsed_path.substring(close_brack_i + 1);
+                } else {
+                    let path_key = -1 === open_brack_i
+                        ? unparsed_path
+                        : unparsed_path.substring(0, open_brack_i)
+                        ; // eslint-disable-line indent
+                    '.' === path_key[0] && (path_key = path_key.substring(1));
+                    path_keys.push(path_key);
+                    unparsed_path = -1 === open_brack_i
+                        ? ''
+                        : unparsed_path.substring(open_brack_i)
+                        ; // eslint-disable-line indent
+                }
+            }
+            return path_keys.map(coerce_numbers);
+
+            // -----------
+
+            function coerce_numbers(item) {
+                return '' === item ? null
+                    : !isNaN(item) && 'Infinity' !== item ? Number(item)
+                    : item // eslint-disable-line indent
+                    ; // eslint-disable-line indent
+            }
+        }
     }
 
     function parse_query_params(query_params) {
-        const query_object = {};
+        const query_object = Array.isArray(query_params) ? [] : {};
         const keys = Object.keys(query_params).sort();
         for (const raw_key of keys) {
             const key = decode(raw_key);
             const value = query_params[raw_key];
             switch (true) {
                 case undefined === value:
-                case null === value:
-                case '' === value:
                     query_object[key] = null;
                     break;
-                case 'string' === typeof value:
-                    query_object[key] = decode(value);
-                    break;
+                case null === value:
+                case '' === value:
                 case 'number' === typeof value:
                 case 'boolean' === typeof value:
                 case 'symbol' === typeof value:
                     query_object[key] = value;
+                    break;
+                case 'string' === typeof value:
+                    query_object[key] = decode(value);
                     break;
                 case 'object' === typeof value:
                     query_object[key] = parse_query_params(value);
