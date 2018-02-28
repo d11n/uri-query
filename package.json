@@ -1,6 +1,6 @@
 {
     "name": "uri-query",
-    "version": "0.0.2",
+    "version": "0.0.3",
     "description": "Strictly parse and manipulate URI queries",
     "author": "Derek Dunagan (https://github.com/rhombal)",
     "license": "MIT",
