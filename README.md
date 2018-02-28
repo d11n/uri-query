@@ -1,5 +1,71 @@
 # URI Query
-Strictly parse and manipulate URI queries
+#### Parse and manipulate URI queries according to different strategies
+
+The URI specification RFC3986 defines very few rules on how URI queries are to be parsed. It merely states that URI queries are "non-hierarchical data" (in contrast to paths) and that `"key=value"` pairs are "often used". This module supports using or defining URI query parsing strategies that support your framework of choice, personal preferences, legacy requirements, etc.
+
+The default strategy notably supports:
+<table><tbody>
+    <tr>
+        <td><strong>Objects</strong></td>
+        <td><code>?filters[price]=50-100</code></td>
+    </tr>
+    <tr>
+        <td><strong>Arrays</strong></td>
+        <td><code>?platforms[0]=chrome&platforms[1]=opera</code></td>
+    </tr>
+    <tr>
+        <td><strong>Sets</strong></td>
+        <td><code>?platforms[]=chrome&platforms[]=opera</code></td>
+    </tr>
+    <tr>
+        <td><strong>Multidimensional Structures</strong></td>
+        <td><code>?q=jordans&filters[status]=in-stock&filters[price][range][0]=100&filters[price][range][1]=200&filters[price][currency]=USD</code></td>
+    </tr>
+    <tr>
+        <td><strong>True</strong></td>
+        <td><code>?view-all</code></td>
+    </tr>
+    <tr>
+        <td><strong>Null</strong></td>
+        <td><code>?q=</code></td>
+    </tr>
+</tbody></table>
+
+## Installation
+```
+npm add uri-query
+```
+
+This module makes use of ES2015 features, but does not polyfill them. You will need to implement your own if the environment you are deploying to does not support:
+
+<table><tbody>
+    <tr>
+        <td><strong>Sets</strong></td>
+        <td>Node 0.12+</td>
+        <td>IE11</td>
+        <td>Edge</td>
+    </tr>
+    <tr>
+        <td><strong>Object.assign()</strong></td>
+        <td>Node 6.4+</td>
+        <td><strike>IE</strike></td>
+        <td>Edge</td>
+    </tr>
+    <tr>
+        <td><strong>String.prototype.includes()</strong></td>
+        <td>Node 4+</td>
+        <td><strike>IE</strike></td>
+        <td>Edge</td>
+    </tr>
+    <tr>
+        <td><strong>Array.prototype.includes()</strong></td>
+        <td>Node 6.13+</td>
+        <td><strike>IE</strike></td>
+        <td>Edge14+</td>
+    </tr>
+</tbody></table>
+
+## Specification Compliance
 
 ### From [RFC3986: 3.4.  Query](https://tools.ietf.org/html/rfc3986#section-3.4)
 <blockquote><pre>
@@ -9,9 +75,9 @@ resource within the scope of the URI's scheme and naming authority
 (if any).  The query component is indicated by the first question
 mark ("?") character and terminated by a number sign ("#") character
 or by the end of the URI.
-
+<br/>
 query = *( pchar / "/" / "?" )
-
+<br/>
 The characters slash ("/") and question mark ("?") may represent data
 within the query component.  Beware that some older, erroneous
 implementations may not handle such data correctly when it is used as
