@@ -197,6 +197,7 @@
         for (const uri_query of uri_queries) {
             assert.strictEqual(uri_query.q, 'jordans');
             assert.strictEqual(uri_query.filters.status, 'in-stock');
+            assert.strictEqual(Array.isArray(uri_query.filters.price.range), true, 'filters.price.range an array?');
             assert.strictEqual(uri_query.filters.price.range[0], '100');
             assert.strictEqual(uri_query.filters.price.range[1], '200');
             assert.strictEqual(`${ uri_query }`, '?filters[price][currency]=USD&filters[price][range][0]=100&filters[price][range][1]=200&filters[status]=in-stock&q=jordans');
