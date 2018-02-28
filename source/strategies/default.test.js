@@ -154,16 +154,16 @@
     function test_for_set() {
         let uri_query = new Uri_query({ fish: new Set([ '1', 2, 'red', '%230000FF' ]) });
         assert(uri_query.fish instanceof Set, 'fish a set? (1)');
-        assert.strictEqual(uri_query.fish.has('1'), true, 'has "1"?');
-        assert.strictEqual(uri_query.fish.has(2), true, 'has 2?');
-        assert.strictEqual(uri_query.fish.has('red'), true, 'has "red"?');
-        assert.strictEqual(uri_query.fish.has('#0000FF'), true, 'has "#0000FF"?');
+        assert(uri_query.fish.has('1'), 'has "1"?');
+        assert(uri_query.fish.has(2), 'has 2?');
+        assert(uri_query.fish.has('red'), 'has "red"?');
+        assert(uri_query.fish.has('#0000FF'), 'has "#0000FF"?');
         assert.strictEqual(`${ uri_query }`, '?fish[]=1&fish[]=2&fish[]=red&fish[]=%230000FF');
 
         uri_query = new Uri_query('?fish[]=two&fish[]=one');
         assert(uri_query.fish instanceof Set, 'fish a set? (2)');
-        assert.strictEqual(uri_query.fish.has('one'), true, 'has "one"?');
-        assert.strictEqual(uri_query.fish.has('two'), true, 'has "two"?');
+        assert(uri_query.fish.has('one'), 'has "one"?');
+        assert(uri_query.fish.has('two'), 'has "two"?');
         assert.strictEqual(`${ uri_query }`, '?fish[]=two&fish[]=one');
     }
 
@@ -197,7 +197,7 @@
         for (const uri_query of uri_queries) {
             assert.strictEqual(uri_query.q, 'jordans');
             assert.strictEqual(uri_query.filters.status, 'in-stock');
-            assert.strictEqual(Array.isArray(uri_query.filters.price.range), true, 'filters.price.range an array?');
+            assert(Array.isArray(uri_query.filters.price.range), 'filters.price.range an array?');
             assert.strictEqual(uri_query.filters.price.range[0], '100');
             assert.strictEqual(uri_query.filters.price.range[1], '200');
             assert.strictEqual(`${ uri_query }`, '?filters[price][currency]=USD&filters[price][range][0]=100&filters[price][range][1]=200&filters[status]=in-stock&q=jordans');
@@ -205,7 +205,7 @@
         const uri_query = new Uri_query('?[0]=no+root+arrays&l][=&m][0]=n&filter.status=published');
         assert.strictEqual(uri_query['[0]'], 'no root arrays');
         assert.strictEqual(uri_query['l]['], null);
-        assert.strictEqual(Array.isArray(uri_query['m]']), true, '"m]" an array?');
+        assert(Array.isArray(uri_query['m]']), '"m]" an array?');
         assert.strictEqual(uri_query['m]'][0], 'n');
         assert.strictEqual(uri_query['filter.status'], 'published');
         assert.strictEqual(`${ uri_query }`, '?%5B0%5D=no%20root%20arrays&filter.status=published&l%5D%5B=&m%5D[0]=n');
