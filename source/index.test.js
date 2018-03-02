@@ -8,8 +8,9 @@
     function describe_instance() {
         it('composes as empty string in all expected cases', test_for_empty);
         it('trims white space and ampersands', test_for_trimming);
-        it('throws when constructing with non-sense', test_for_construct_error);
-        return true;
+        it('throws when constructing with nonsense', test_for_construct_error);
+        it('does not throw when coercing with nonsense', test_for_coerce_error);
+        describe('if alter_params is defined', describe_alter_params);
     }
     function test_for_empty() {
         const empty_string_uri_queries = [
@@ -25,7 +26,6 @@
         for (const uri_query of empty_string_uri_queries) {
             assert.strictEqual(`${ uri_query }`, '');
         }
-        return true;
     }
     function test_for_trimming() {
         const empty_string_uri_queries = [
@@ -54,11 +54,27 @@
         for (const uri_query of yo_uri_queries) {
             assert.strictEqual(`${ uri_query }`, '?yo=yo');
         }
-        return true;
     }
     function test_for_construct_error() {
         assert.throws(() => new Uri_query(test_for_construct_error), TypeError);
-        return true;
+    }
+    function test_for_coerce_error() {
+        assert.doesNotThrow(() => Uri_query(test_for_construct_error));
+    }
+
+    // -----------
+
+    function describe_alter_params() {
+        it('alters primitives', test_for_alter_params_primitives);
+    }
+    function test_for_alter_params_primitives() {
+        let uri_query = new Uri_query(`?qty=2`);
+        assert.strictEqual(uri_query.qty, '2');
+        assert.strictEqual(`${ uri_query }`, '?qty=2');
+
+        uri_query = new Uri_query(`?qty=2`, { qty: Number });
+        assert.strictEqual(uri_query.qty, 2);
+        assert.strictEqual(`${ uri_query }`, '?qty=2');
     }
 }(
     require('assert'),
