@@ -254,6 +254,9 @@
         }
     }
 }(
-    require('strict-uri-encode'),
-    require('decode-uri-component'),
+    encodeURIComponent,
+    function decode_uri_component(raw_value) {
+        const value = String(raw_value).replace(/\+/g, '%20');
+        return decodeURIComponent(value);
+    },
 ));

@@ -24,10 +24,7 @@
     "bugs": {
         "url": "https://github.com/rhombal/uri-query/issues"
     },
-    "dependencies": {
-        "decode-uri-component": "^0.2.0",
-        "strict-uri-encode": "^2.0.0"
-    },
+    "dependencies": {},
     "devDependencies": {
         "babel-cli": "^6.26.0",
         "babel-preset-env": "^1.6.1",
