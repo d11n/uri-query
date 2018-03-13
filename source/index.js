@@ -144,7 +144,7 @@
     // -----------
 
     function is_encoded(raw_uri_query) {
-        return /^\??[A-Za-z0-9-._~%!$&'()*+,;=:@/?]*(?:#.*)?$/
+        return /^\??(?:[A-Za-z0-9-._~!$&'()*+,;=:@/?]|%[0-9A-F]{2})*(?:#.*)?$/
             .test(raw_uri_query)
             ; // eslint-disable-line indent
     }

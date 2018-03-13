@@ -1,8 +1,64 @@
 /* eslint-disable max-len *//* eslint-disable max-statements */
 // eslint-disable-next-line max-params
 (function main(assert, Uri_query) {
+    describe('Uri_query class', describe_class);
     describe('Uri_query instance', describe_instance);
     return true;
+
+    // -----------
+
+    function describe_class() {
+        it('Uri_query.is_encoded', test_for_encoding_check);
+    }
+    function test_for_encoding_check() {
+        /* eslint-disable indent */
+        const valid_uri_query_strings = [
+            '',
+            '?',
+            '#',
+            '?#',
+            '?#😱', // invalid fragments to not invalidate the query
+            // "pchar" > "unreserved"
+                '?ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz', // ALPHA
+                '?0123456789', // DIGIT
+                '?-._~',
+            '?%00%0F%FF', // "pchar" > "pct-encoded"
+            '?!$&\'()*+,;=', // "pchar" > "sub-delims"
+            '?:@', // "pchar"
+            '?/?', // "query"
+            ]; // eslint-disable-line indent
+        /* eslint-enabled indent */
+        for (const uri_query of valid_uri_query_strings) {
+            assert.strictEqual(Uri_query.is_encoded(uri_query), true, uri_query);
+        }
+
+        const invalid_uri_query_strings = [
+            ' ',
+            '? ',
+            '?^',
+            '?"',
+            '?`',
+            '?|',
+            '?\\',
+            '?<',
+            '?>',
+            '?[',
+            '?]',
+            '?{',
+            '?}',
+            '?%',
+            '?%0',
+            '?%A',
+            '?%aa',
+            '?%9G',
+            '?%%',
+            '?100%',
+            '?utf=✔︎',
+            ]; // eslint-disable-line indent
+        for (const uri_query of invalid_uri_query_strings) {
+            assert.strictEqual(Uri_query.is_encoded(uri_query), false, uri_query);
+        }
+    }
 
     // -----------
 
