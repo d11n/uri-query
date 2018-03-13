@@ -1,5 +1,6 @@
 // eslint-disable-next-line max-params
 (function main(DEFAULT_STRATEGY) {
+    Uri_query.is_encoded = is_encoded;
     return module.exports = Object.freeze(Uri_query);
 
     // -----------
@@ -138,6 +139,14 @@
 
     function dont_alter(value) {
         return value;
+    }
+
+    // -----------
+
+    function is_encoded(raw_uri_query) {
+        return /^\??[A-Za-z0-9-._~%!$&'()*+,;=:@/?]*(?:#.*)?$/
+            .test(raw_uri_query)
+            ; // eslint-disable-line indent
     }
 }(
     require('./strategies/default'),
