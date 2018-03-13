@@ -122,10 +122,10 @@
     // -----------
 
     function describe_alter_params() {
-        it('alters/recomposes single function', test_for_alter_params_onefunc);
-        it('alters/recomposes parse/compose object', test_for_alter_params_obj);
+        it('alters/recomposes single parse function', test_for_alter_params_parse_function);
+        it('alters/recomposes parse/compose object', test_for_alter_params_parse_compose_object);
     }
-    function test_for_alter_params_onefunc() {
+    function test_for_alter_params_parse_function() {
         let uri_query = new Uri_query(`?qty=2`);
         assert.strictEqual(uri_query.qty, '2');
         assert.strictEqual(`${ uri_query }`, '?qty=2');
@@ -134,7 +134,7 @@
         assert.strictEqual(uri_query.qty, 2);
         assert.strictEqual(`${ uri_query }`, '?qty=2');
     }
-    function test_for_alter_params_obj() {
+    function test_for_alter_params_parse_compose_object() {
         let uri_query = new Uri_query(
             `?sort_by=last_name.asc,first_name.asc`,
             { sort_by: parse_sort_list },
