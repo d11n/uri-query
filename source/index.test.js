@@ -17,7 +17,7 @@
             '?',
             '#',
             '?#',
-            '?#😱', // invalid fragments to not invalidate the query
+            '?#😱', // invalid fragments do not make the query invalid
             // "pchar" > "unreserved"
                 '?ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz', // ALPHA
                 '?0123456789', // DIGIT
@@ -28,8 +28,12 @@
             '?/?', // "query"
             ]; // eslint-disable-line indent
         /* eslint-enabled indent */
-        for (const uri_query of valid_uri_query_strings) {
-            assert.strictEqual(Uri_query.is_encoded(uri_query), true, uri_query);
+        for (const query_string of valid_uri_query_strings) {
+            assert.strictEqual(
+                Uri_query.is_encoded(query_string),
+                true,
+                query_string,
+                ); // eslint-disable-line indent
         }
 
         const invalid_uri_query_strings = [
@@ -53,10 +57,14 @@
             '?%9G',
             '?%%',
             '?100%',
-            '?utf=✔︎',
+            '?utf8=✔︎',
             ]; // eslint-disable-line indent
-        for (const uri_query of invalid_uri_query_strings) {
-            assert.strictEqual(Uri_query.is_encoded(uri_query), false, uri_query);
+        for (const query_string of invalid_uri_query_strings) {
+            assert.strictEqual(
+                Uri_query.is_encoded(query_string),
+                false,
+                query_string,
+                ); // eslint-disable-line indent
         }
     }
 
