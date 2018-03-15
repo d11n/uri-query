@@ -2,7 +2,7 @@
     "name": "uri-query",
     "version": "0.1.2",
     "description": "Parse and manipulate URI queries according to different strategies",
-    "author": "Derek Dunagan (https://github.com/rhombal)",
+    "author": "Derek Dunagan (https://github.com/d11n)",
     "license": "MIT",
     "keywords": [
         "uri",
@@ -18,11 +18,11 @@
     "main": "target/npm/index.js",
     "repository": {
         "type": "git",
-        "url": "git+https://github.com/rhombal/uri-query.git"
+        "url": "git+https://github.com/d11n/uri-query.git"
     },
-    "homepage": "https://github.com/rhombal/uri-query#readme",
+    "homepage": "https://github.com/d11n/uri-query#readme",
     "bugs": {
-        "url": "https://github.com/rhombal/uri-query/issues"
+        "url": "https://github.com/d11n/uri-query/issues"
     },
     "dependencies": {},
     "devDependencies": {
