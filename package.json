@@ -46,7 +46,7 @@
         "build-npm": "rimraf ./target/npm; babel ./source --out-dir ./target/npm",
         "publish-npm": "npm run --silent build && git push origin && np",
         "coverage": "nyc report --reporter=text-lcov | coveralls",
-        "rinse": "rimraf ./target ./.tmp ./tmp ./**/.tmp ./**/tmp ./npm-debug.log* ./**/npm-debug.log*",
+        "rinse": "rimraf ./target ./nyc_output ./.tmp ./tmp ./**/.tmp ./**/tmp ./npm-debug.log* ./**/npm-debug.log*",
         "scrub": "npm run --silent rinse; rimraf ./node_modules"
     }
 }
