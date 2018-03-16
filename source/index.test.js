@@ -118,6 +118,13 @@
         for (const uri_query of yo_uri_queries) {
             assert.strictEqual(`${ uri_query }`, '?yo=yo');
         }
+        const uri_query = new Uri_query(`
+            ?q=uri+query
+            &lang=en
+            `); // eslint-disable-line indent
+        assert.strictEqual(uri_query.q, 'uri query');
+        assert.strictEqual(uri_query.lang, 'en');
+        assert.strictEqual(`${ uri_query }`, '?lang=en&q=uri%20query');
     }
     function test_for_construct_error() {
         assert.throws(() => new Uri_query(test_for_construct_error), TypeError);

@@ -70,6 +70,7 @@
                 -1 === hash_index ? undefined : hash_index,
                 )
             .replace(/(?:^[&\s]+|[&\s]+$)/g, '') // trim white space and &'s
+            .replace(/[&\s]*&[&\s]*/g, '&')
             ;
         /* eslint-enable indent */
         if ('' === query_string) {
