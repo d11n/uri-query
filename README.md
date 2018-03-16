@@ -1,4 +1,4 @@
-# URI Query <img src="https://img.shields.io/github/license/d11n/uri-query.svg?style=flat-square" alt="License" align="right"/>
+# URI Query
 #### Parse and manipulate URI queries according to different strategies
 
 [![Travis](https://img.shields.io/travis/d11n/uri-query.svg?style=flat-square)](https://travis-ci.org/d11n/uri-query)
