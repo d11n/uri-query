@@ -1,11 +1,16 @@
 // eslint-disable-next-line max-params
 (function main(DEFAULT_STRATEGY) {
+    class Uri_query {
+        constructor(...args) {
+            return construct_uri_query.call(this, ...args);
+        }
+    }
     Uri_query.is_encoded = is_encoded;
     return module.exports = Object.freeze(Uri_query);
 
     // -----------
 
-    function Uri_query(parsee, alter_params) {
+    function construct_uri_query(parsee, alter_params) {
         const this_uri_query = this;
         if (!(this_uri_query instanceof Uri_query)) {
             // Coercion doesn't throw
