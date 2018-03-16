@@ -1,5 +1,5 @@
 # URI Query
-#### Parse and manipulate URI queries according to different strategies
+#### Parse and manipulate URI queries according to pre-defined or custom strategies
 
 [![Travis](https://img.shields.io/travis/d11n/uri-query.svg?style=flat-square)](https://travis-ci.org/d11n/uri-query)
 [![Coverage Status](https://img.shields.io/coveralls/github/d11n/uri-query.svg?style=flat-square)](https://coveralls.io/github/d11n/uri-query)
