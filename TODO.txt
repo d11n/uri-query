@@ -9,6 +9,3 @@ Before 1.0
 - document in README
     - Why?
     - Usage
-- badges (more to get the hang of it)
-    - license
-    - coverage (Code Climate? Coveralls? CodeCov? Codacy? Something else?)
