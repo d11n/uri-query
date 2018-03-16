@@ -8,7 +8,7 @@
     // -----------
 
     function describe_class() {
-        it('Uri_query.is_encoded', test_for_encoding_check);
+        it('Uri_query.is_encoded complies with RFC3986', test_for_encoding_check);
     }
     function test_for_encoding_check() {
         /* eslint-disable indent */
