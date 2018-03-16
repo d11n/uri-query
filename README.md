@@ -1,4 +1,4 @@
-# URI Query
+# URI Query <img src="https://img.shields.io/github/license/d11n/uri-query.svg?style=flat-square" alt="License" align="right"/>
 #### Parse and manipulate URI queries according to different strategies
 
 [![Travis](https://img.shields.io/travis/d11n/uri-query.svg?style=flat-square)](https://travis-ci.org/d11n/uri-query)
@@ -9,8 +9,6 @@
 [![Known Vulnerabilities](https://snyk.io/test/github/d11n/uri-query/badge.svg?style=flat-square)](https://snyk.io/test/github/d11n/uri-query)
 [![David Dependencies](https://img.shields.io/david/d11n/uri-query.svg?style=flat-square)](https://david-dm.org/d11n/uri-query)
 [![David Development Dependencies](https://img.shields.io/david/dev/d11n/uri-query.svg?style=flat-square)](https://david-dm.org/d11n/uri-query?type=dev)
-<br/>
-[![License](https://img.shields.io/github/license/d11n/uri-query.svg?style=flat-square)](https://github.com/d11n/uri-query/blob/master/LICENSE)
 
 The URI specification RFC3986 defines very few rules on how URI queries are to be parsed. It merely states that URI queries are "non-hierarchical data" (in contrast to URI paths) and that "key=value" pairs are "often used". This module supports using pre-defined or defining your own URI query parsing strategies that support your framework of choice, personal preferences, legacy requirements, etc.
 
