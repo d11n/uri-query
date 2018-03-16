@@ -29,6 +29,7 @@
         "babel-cli": "^6.26.0",
         "babel-preset-env": "^1.6.1",
         "chokidar-cli": "^1.2.0",
+        "codecov": "^3.0.0",
         "coveralls": "^3.0.0",
         "eslint": "^4.18.0",
         "istanbul": "^0.4.5",
@@ -45,7 +46,7 @@
         "prebuild-npm": "npm install --silent && npm test --silent",
         "build-npm": "rimraf ./target/npm; babel ./source --out-dir ./target/npm",
         "publish-npm": "npm run --silent build && git push origin && np",
-        "coverage": "nyc report --reporter=text-lcov | coveralls",
+        "coverage": "nyc report --reporter=text-lcov | tee >(coveralls) | codecov",
         "rinse": "rimraf ./target ./.tmp ./tmp ./**/.tmp ./**/tmp ./npm-debug.log* ./**/npm-debug.log*",
         "scrub": "npm run --silent rinse; rimraf ./node_modules"
     }

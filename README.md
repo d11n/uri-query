@@ -1,10 +1,11 @@
 # URI Query
 #### Parse and manipulate URI queries according to different strategies
 
-[![Travis](https://img.shields.io/travis/d11n/uri-query.svg)](https://travis-ci.org/d11n/uri-query)
-[![Coverage Status](https://img.shields.io/coveralls/github/d11n/uri-query.svg)](https://coveralls.io/github/d11n/uri-query)
-[![Code Climate](https://img.shields.io/codeclimate/maintainability/d11n/uri-query.svg)](https://codeclimate.com/github/d11n/uri-query)
-[![license](https://img.shields.io/github/license/d11n/uri-query.svg)](https://github.com/d11n/uri-query/blob/master/LICENSE)
+[![Travis](https://img.shields.io/travis/d11n/uri-query.svg?style=flat-square)](https://travis-ci.org/d11n/uri-query)
+[![Coverage Status](https://img.shields.io/coveralls/github/d11n/uri-query.svg?style=flat-square)](https://coveralls.io/github/d11n/uri-query)
+[![Code Climate](https://img.shields.io/codeclimate/maintainability/d11n/uri-query.svg?style=flat-square)](https://codeclimate.com/github/d11n/uri-query)
+[![Codecov](https://img.shields.io/codecov/c/github/d11n/uri-query.svg?style=flat-square)](https://codecov.io/gh/d11n/uri-query)
+[![license](https://img.shields.io/github/license/d11n/uri-query.svg?style=flat-square)](https://github.com/d11n/uri-query/blob/master/LICENSE)
 
 The URI specification RFC3986 defines very few rules on how URI queries are to be parsed. It merely states that URI queries are "non-hierarchical data" (in contrast to URI paths) and that "key=value" pairs are "often used". This module supports using pre-defined or defining your own URI query parsing strategies that support your framework of choice, personal preferences, legacy requirements, etc.
 
