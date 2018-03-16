@@ -196,7 +196,7 @@
         const uri_query = new Uri_query(`?toString=42&__proto__=evil&constructor=`);
         assert.strictEqual(uri_query.$$$toString, '42');
         // eslint-disable-next-line no-proto
-        assert.notStrictEqual(uri_query.__proto__, 'evil'); // __proto__ is ignored javascript
+        assert.notStrictEqual(uri_query.__proto__, 'evil'); // __proto__ is ignored by javascript
         assert.notStrictEqual(uri_query.$$$__proto__, 'evil');
         assert.strictEqual(uri_query.$$$constructor, null);
         assert.strictEqual(`${ uri_query }`, '?constructor=&toString=42');
