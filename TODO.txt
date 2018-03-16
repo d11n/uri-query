@@ -2,6 +2,13 @@ Before 1.0
 ----------
 - handle query keys that are also prototypal props, like "valueOf"
 - actually provide a means to define strategies
+- provide strategies for
+    - rails
+    - express
+    - symfony
+    - django
+- maintainability: A
+- coverage: 100%
 - build to
     - ./index.js
     - ./target/node/*
