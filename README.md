@@ -7,9 +7,9 @@
 [![Codacy Grade](https://img.shields.io/codacy/grade/c0a7abfd51584b148e6c37a68d5ea872.svg?style=flat-square)](https://www.codacy.com/app/d11n/uri-query)
 [![License](https://img.shields.io/github/license/d11n/uri-query.svg?style=flat-square)](https://github.com/d11n/uri-query/blob/master/LICENSE)
 <br/>
-[![Known Vulnerabilities](https://snyk.io/test/github/d11n/uri-query/badge.svg)](https://snyk.io/test/github/d11n/uri-query)
-[![David Dependencies](https://img.shields.io/david/d11n/uri-query.svg)](https://david-dm.org/d11n/uri-query)
-[![David Development Dependencies](https://img.shields.io/david/dev/d11n/uri-query.svg)](https://david-dm.org/d11n/uri-query?type=dev)
+[![Known Vulnerabilities](https://snyk.io/test/github/d11n/uri-query/badge.svg?style=flat-square)](https://snyk.io/test/github/d11n/uri-query)
+[![David Dependencies](https://img.shields.io/david/d11n/uri-query.svg?style=flat-square)](https://david-dm.org/d11n/uri-query)
+[![David Development Dependencies](https://img.shields.io/david/dev/d11n/uri-query.svg?style=flat-square)](https://david-dm.org/d11n/uri-query?type=dev)
 
 
 The URI specification RFC3986 defines very few rules on how URI queries are to be parsed. It merely states that URI queries are "non-hierarchical data" (in contrast to URI paths) and that "key=value" pairs are "often used". This module supports using pre-defined or defining your own URI query parsing strategies that support your framework of choice, personal preferences, legacy requirements, etc.
