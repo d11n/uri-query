@@ -44,6 +44,7 @@
                 break;
         }
         if (parsed_query_object) {
+            parsed_query_object = parse_protect_proto(parsed_query_object);
             return alter_params
                 ? alter_query_object('parse', parsed_query_object, alter_params)
                 : parsed_query_object
@@ -99,11 +100,56 @@
     }
 
     function compose_query_string(query_object, strategy, alter_params) {
+        const safe_query_object = compose_protect_proto(query_object);
         const altered_object = alter_params
-            ? alter_query_object('compose', query_object, alter_params)
-            : query_object
+            ? alter_query_object('compose', safe_query_object, alter_params)
+            : safe_query_object
             ; // eslint-disable-line indent
         return strategy.compose_query_string(altered_object);
+    }
+
+    // -----------
+
+    function parse_protect_proto(parsed_query_object) {
+        const unsafe_keys = Object.getOwnPropertyNames(Object.prototype);
+        const safe_query_object = Object.assign({}, parsed_query_object);
+        for (const key of unsafe_keys) {
+            '__proto__' !== key // __proto__ is ignored javascript
+                && undefined !== safe_query_object[key]
+                && safe_query_object[key] !== Object.prototype[key]
+                && protect_prop(key)
+                ; // eslint-disable-line indent
+        }
+        return safe_query_object;
+
+        // -----------
+
+        function protect_prop(key) {
+            safe_query_object[ `$$$${ key }` ] = safe_query_object[key];
+            delete safe_query_object[key];
+            return true;
+        }
+    }
+
+    function compose_protect_proto(parsed_query_object) {
+        const unsafe_keys = Object.getOwnPropertyNames(Object.prototype);
+        const unsafe_query_object = Object.assign({}, parsed_query_object);
+        for (const unsafe_key of unsafe_keys) {
+            const safe_key = `$$$${ unsafe_key }`;
+            '__proto__' !== unsafe_key // __proto__ is ignored javascript
+                && undefined !== unsafe_query_object[safe_key]
+                && unprotect_prop(unsafe_key, safe_key)
+                ; // eslint-disable-line indent
+        }
+        return unsafe_query_object;
+
+        // -----------
+
+        function unprotect_prop(unsafe_key, safe_key) {
+            unsafe_query_object[ unsafe_key ] = unsafe_query_object[safe_key];
+            delete unsafe_query_object[safe_key];
+            return true;
+        }
     }
 
     // -----------

@@ -74,6 +74,7 @@
         it('composes as empty string in all expected cases', test_for_empty);
         it('trims white space and ampersands', test_for_trimming);
         it('throws when constructing with nonsense', test_for_construct_error);
+        it('renames keys that exist in Object.prototype', test_for_protoprops);
         describe('if alter_params is defined', describe_alter_params);
     }
     function test_for_empty() {
@@ -189,6 +190,16 @@
             }
             return sort_array.join(',');
         }
+    }
+
+    function test_for_protoprops() {
+        const uri_query = new Uri_query(`?toString=42&__proto__=evil&constructor=`);
+        assert.strictEqual(uri_query.$$$toString, '42');
+        // eslint-disable-next-line no-proto
+        assert.notStrictEqual(uri_query.__proto__, 'evil'); // __proto__ is ignored javascript
+        assert.notStrictEqual(uri_query.$$$__proto__, 'evil');
+        assert.strictEqual(uri_query.$$$constructor, null);
+        assert.strictEqual(`${ uri_query }`, '?constructor=&toString=42');
     }
 }(
     require('assert'),
