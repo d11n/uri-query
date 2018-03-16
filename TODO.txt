@@ -1,0 +1,14 @@
+Before 1.0
+----------
+- handle query keys that are also prototypal props, like "valueOf"
+- actually provide a means to define strategies
+- build to
+    - ./index.js
+    - ./target/node/*
+    - ./target/web/index.js
+- document in README
+    - Why?
+    - Usage
+- badges (more to get the hang of it)
+    - license
+    - coverage (Code Climate? Coveralls? CodeCov? Codacy? Something else?)
