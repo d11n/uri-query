@@ -74,7 +74,6 @@
         it('composes as empty string in all expected cases', test_for_empty);
         it('trims white space and ampersands', test_for_trimming);
         it('throws when constructing with nonsense', test_for_construct_error);
-        it('does not throw when coercing with nonsense', test_for_coerce_error);
         describe('if alter_params is defined', describe_alter_params);
     }
     function test_for_empty() {
@@ -122,9 +121,6 @@
     }
     function test_for_construct_error() {
         assert.throws(() => new Uri_query(test_for_construct_error), TypeError);
-    }
-    function test_for_coerce_error() {
-        assert.doesNotThrow(() => Uri_query(test_for_construct_error));
     }
 
     // -----------

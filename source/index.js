@@ -12,14 +12,6 @@
 
     function construct_uri_query(parsee, alter_params) {
         const this_uri_query = this;
-        if (!(this_uri_query instanceof Uri_query)) {
-            // Coercion doesn't throw
-            try {
-                return new Uri_query(parsee, alter_params);
-            } catch (exception) {
-                return new Uri_query;
-            }
-        }
         const strategy = DEFAULT_STRATEGY;
         Object.defineProperty(this_uri_query, 'toString', { value: to_string });
         if (undefined !== parsee && null !== parsee) {
