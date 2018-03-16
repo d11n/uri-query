@@ -7,7 +7,7 @@ Before 1.0
     - symfony
     - django
 - maintainability: A
-- coverage: 100%
+- coverage: 100% (maybe)
 - build to
     - ./index.js
     - ./target/node/*
@@ -15,3 +15,4 @@ Before 1.0
 - document in README
     - Why?
     - Usage
+    - Default Strategy
