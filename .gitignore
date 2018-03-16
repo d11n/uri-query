@@ -1,3 +1,4 @@
+.nyc_output
 .tmp
 .vscode
 node_modules
