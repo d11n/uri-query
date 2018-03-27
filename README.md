@@ -2,43 +2,15 @@
 #### Parse and manipulate URI queries according to pre-defined or custom strategies
 
 [![Travis](https://img.shields.io/travis/d11n/uri-query.svg?style=flat-square)](https://travis-ci.org/d11n/uri-query)
-[![Coverage Status](https://img.shields.io/coveralls/github/d11n/uri-query.svg?style=flat-square)](https://coveralls.io/github/d11n/uri-query)
-[![Codacy Grade](https://img.shields.io/codacy/grade/c0a7abfd51584b148e6c37a68d5ea872.svg?style=flat-square)](https://www.codacy.com/app/d11n/uri-query)
-[![Code Climate](https://img.shields.io/codeclimate/maintainability/d11n/uri-query.svg?style=flat-square)](https://codeclimate.com/github/d11n/uri-query)
+[![Codacy Coverage](https://img.shields.io/codacy/coverage/c0a7abfd51584b148e6c37a68d5ea872.svg?style=flat-square)](https://www.codacy.com/app/d11n/uri-query)
+[![Codacy Quality](https://img.shields.io/codacy/grade/c0a7abfd51584b148e6c37a68d5ea872.svg?style=flat-square)](https://www.codacy.com/app/d11n/uri-query)
+[![Code Climate Maintainability](https://img.shields.io/codeclimate/maintainability/d11n/uri-query.svg?style=flat-square)](https://codeclimate.com/github/d11n/uri-query)
 <br/>
 [![Known Vulnerabilities](https://snyk.io/test/github/d11n/uri-query/badge.svg?style=flat-square)](https://snyk.io/test/github/d11n/uri-query)
 [![David Dependencies](https://img.shields.io/david/d11n/uri-query.svg?style=flat-square)](https://david-dm.org/d11n/uri-query)
 [![David Development Dependencies](https://img.shields.io/david/dev/d11n/uri-query.svg?style=flat-square)](https://david-dm.org/d11n/uri-query?type=dev)
 
 The URI specification RFC3986 defines very few rules on how URI queries are to be parsed. It merely states that URI queries are "non-hierarchical data" (in contrast to URI paths) and that "key=value" pairs are "often used". This module supports using pre-defined or defining your own URI query parsing strategies that support your framework of choice, personal preferences, legacy requirements, etc.
-
-The default strategy notably supports:
-<table><tbody>
-    <tr>
-        <td><strong>Objects</strong></td>
-        <td><code>?filters[price]=50-100</code></td>
-    </tr>
-    <tr>
-        <td><strong>Arrays</strong></td>
-        <td><code>?platforms[0]=chrome&platforms[1]=opera</code></td>
-    </tr>
-    <tr>
-        <td><strong>Sets</strong></td>
-        <td><code>?platforms[]=chrome&platforms[]=opera</code></td>
-    </tr>
-    <tr>
-        <td><strong>Multidimensional Structures</strong></td>
-        <td><code>?q=jordans&filters[status]=in-stock&filters[price][range][0]=100&filters[price][range][1]=200&filters[price][currency]=USD</code></td>
-    </tr>
-    <tr>
-        <td><strong>True</strong></td>
-        <td><code>?view-all</code></td>
-    </tr>
-    <tr>
-        <td><strong>Null</strong></td>
-        <td><code>?q=</code></td>
-    </tr>
-</tbody></table>
 
 ## Installation
 ```
@@ -73,6 +45,39 @@ This module makes use of ES2015 features, but does not polyfill them. You will n
         <td>Edge14+</td>
     </tr>
 </tbody></table>
+
+## Strategies
+
+### default
+
+The default strategy supports:
+<table><tbody>
+    <tr>
+        <td><strong>Objects</strong></td>
+        <td><code>?filters[price]=50-100</code></td>
+    </tr>
+    <tr>
+        <td><strong>Arrays</strong></td>
+        <td><code>?platforms[0]=chrome&platforms[1]=opera</code></td>
+    </tr>
+    <tr>
+        <td><strong>Sets</strong></td>
+        <td><code>?platforms[]=chrome&platforms[]=opera</code></td>
+    </tr>
+    <tr>
+        <td><strong>Multidimensional Structures</strong></td>
+        <td><code>?q=jordans&filters[status]=in-stock&filters[price][range][0]=100&filters[price][range][1]=200&filters[price][currency]=USD</code></td>
+    </tr>
+    <tr>
+        <td><strong>True</strong></td>
+        <td><code>?view-all</code></td>
+    </tr>
+    <tr>
+        <td><strong>Null</strong></td>
+        <td><code>?q=</code></td>
+    </tr>
+</tbody></table>
+
 
 ## Specification Compliance
 
