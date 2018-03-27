@@ -3,8 +3,8 @@ target/docs
 .babelrc
 .eslintignore
 .eslintrc.yml
-.nyc_output
 .nvmrc
+.nyc_output
 .tmp
 .travis.yml
 .vscode

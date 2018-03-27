@@ -1,8 +1,5 @@
 {
-    "presets": [
-        "env"
-    ],
-    "ignore": [
-        "**/*.test.js"
-    ]
+    "presets": [ "env", "stage-3" ],
+    "sourceMaps": "inline",
+    "ignore": [ "**/*.test.js" ]
 }
